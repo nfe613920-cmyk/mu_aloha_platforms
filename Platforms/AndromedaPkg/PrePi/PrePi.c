@@ -82,11 +82,6 @@ PrePiMain (
   UINTN                       CharCount;
   UINTN                       StacksSize;
   FIRMWARE_SEC_PERFORMANCE    Performance;
-/////////////////////////////////////////////
-// Patch: call lk scheduler related function.
-  STATIC BOOLEAN              SchedulerBooted      = FALSE;
-  UINT32                      EnableMultiThreading = 0;
-/////////////////////////////////////////////
 
   DXE_MEMORY_PROTECTION_SETTINGS DxeSettings;
   MM_MEMORY_PROTECTION_SETTINGS  MmSettings;
@@ -141,7 +136,6 @@ PrePiMain (
                 );
 
   SerialPortWrite ((UINT8 *)Buffer, CharCount);
-
 
   // Initialize the Debug Agent for Source Level Debugging
   InitializeDebugAgent (DEBUG_AGENT_INIT_POSTMEM_SEC, NULL, NULL);
@@ -210,18 +204,6 @@ PrePiMain (
 
   // SEC phase needs to run library constructors by hand.
   ProcessLibraryConstructorList ();
-/////////////////////////////////////////////
-// Patch: call lk scheduler related function.
-//
-  // Try start scheduler
-  Status = LocateConfigurationMapUINT32ByName("EnableMultiThreading", &EnableMultiThreading);
-  if (!EFI_ERROR(Status) && EnableMultiThreading && !SchedulerBooted){
-    // Start up scheduler
-    SchedulerBooted = TRUE;
-    // Backup Service Table
-    PeiServiceTablePtr = (VOID *)ArmReadTpidrurw();
-    StartUpScheduler(PeiContinueBoot, &_ModuleEntryPoint);
-  }
 
   PeiContinueBoot(NULL);
 }

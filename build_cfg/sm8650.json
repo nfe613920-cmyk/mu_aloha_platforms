@@ -1,0 +1,8 @@
+{
+    "platform": "Lanai",
+    "package": "LanaiPkg",
+    "bootshim": {
+        "UEFI_BASE": "0xF3800000",
+        "UEFI_SIZE": "0x00400000"
+    }
+}

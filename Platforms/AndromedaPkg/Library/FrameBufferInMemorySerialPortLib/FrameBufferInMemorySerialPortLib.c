@@ -52,10 +52,19 @@ SerialPortInitialize(VOID)
     return RETURN_SUCCESS;
 
   LocateMemoryMapAreaByName("Display Reserved", &DisplayMemoryRegion);
+
+  m_MaxPosition.x = gWidth / (FONT_WIDTH + 1);
+  m_MaxPosition.y = (gHeight - 1) / FONT_HEIGHT;
+  m_Color.Foreground = FB_BGRA8888_WHITE;
+  m_Color.Background = FB_BGRA8888_BLACK;
+
   p_Position = (FBCON_POSITION*)(DisplayMemoryRegion.Address + (FixedPcdGet32(PcdMipiFrameBufferWidth) * FixedPcdGet32(PcdMipiFrameBufferHeight) * FixedPcdGet32(PcdMipiFrameBufferPixelBpp) / 8));
 
-  // Reset console
-  FbConReset();
+  if (p_Position->Magic != FBCON_POSITION_MAGIC) {
+    p_Position->Magic = FBCON_POSITION_MAGIC;
+    p_Position->x = 0;
+    p_Position->y = 0;
+  }
 
   // Set flag
   m_Initialized = TRUE;
@@ -88,6 +97,12 @@ void FbConReset(void)
   // Calc max position.
   m_MaxPosition.x = gWidth / (FONT_WIDTH + 1);
   m_MaxPosition.y = (gHeight - 1) / FONT_HEIGHT;
+
+  if (p_Position != NULL) {
+    p_Position->Magic = FBCON_POSITION_MAGIC;
+    p_Position->x = 0;
+    p_Position->y = 0;
+  }
 
   // Reset color.
   m_Color.Foreground = FB_BGRA8888_WHITE;

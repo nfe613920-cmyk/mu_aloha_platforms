@@ -42,7 +42,7 @@ class CommonPlatform():
 ## aloha patch end
     ArchSupported = ("AARCH64",)
     TargetsSupported = ("DEBUG", "RELEASE", "NOOPT")
-    Scopes = (PlatformName, 'gcc_aarch64_linux', 'edk2-build', 'cibuild', 'configdata')
+    Scopes = (PlatformName, 'gcc_aarch64_linux', 'edk2-build', 'configdata')
     WorkspaceRoot = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     PackagesPath = (
         "Platforms",

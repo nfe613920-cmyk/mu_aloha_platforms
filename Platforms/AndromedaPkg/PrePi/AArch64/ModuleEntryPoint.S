@@ -13,6 +13,8 @@
 .set CTRL_SPAN_BIT, (1 << 23)
 
 ASM_FUNC(_ModuleEntryPoint)
+  msr   SPSel, #1
+
   // Do early platform specific actions
   bl    ASM_PFX(ArmPlatformPeiBootAction)
 

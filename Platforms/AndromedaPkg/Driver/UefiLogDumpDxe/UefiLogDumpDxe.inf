@@ -1,0 +1,36 @@
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = UefiLogDumpDxe
+  FILE_GUID                      = A5748C6B-7C08-4B2E-8E99-4A7B8E6701DC
+  MODULE_TYPE                    = DXE_DRIVER
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = UefiLogDumpDxeInitialize
+
+[Sources]
+  UefiLogDumpDxe.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  AndromedaPkg/AndromedaPkg.dec
+
+[LibraryClasses]
+  UefiDriverEntryPoint
+  UefiBootServicesTableLib
+  UefiRuntimeServicesTableLib
+  DebugLib
+  BaseMemoryLib
+  MemoryAllocationLib
+  SerialPortLib
+  DevicePathLib
+
+[Protocols]
+  gEfiSimpleFileSystemProtocolGuid  ## CONSUMES
+  gEfiBlockIoProtocolGuid           ## CONSUMES
+
+[Guids]
+  gEfiEventReadyToBootGuid
+  gEfiEventExitBootServicesGuid
+
+[Depex]
+  TRUE

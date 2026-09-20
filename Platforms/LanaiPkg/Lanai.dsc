@@ -67,7 +67,7 @@
   # Platform-specific
   gArmTokenSpaceGuid.PcdSystemMemorySize|0x300000000        # 12GB Size
 
-  gAndromedaPkgTokenSpaceGuid.PcdABLProduct|"Lanai"
+  # gAndromedaPkgTokenSpaceGuid.PcdABLProduct|"Lanai"
 
 #[PcdsDynamicDefault.common]
 #  gEfiMdeModulePkgTokenSpaceGuid.PcdVideoHorizontalResolution|1344
