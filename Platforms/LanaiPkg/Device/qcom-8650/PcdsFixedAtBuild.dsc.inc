@@ -12,8 +12,8 @@ gAndromedaPkgTokenSpaceGuid.PcdSmbiosSystemRetailSku|"TB520FU"
 
 gAndromedaPkgTokenSpaceGuid.PcdABLProduct|"Lapis"
 
-  gEfiMdePkgTokenSpaceGuid.PcdDebugPropertyMask|0x2f
-  gEfiMdePkgTokenSpaceGuid.PcdDebugPrintErrorLevel|0x800fee0f
+#  gEfiMdePkgTokenSpaceGuid.PcdDebugPropertyMask|0x2f
+#  gEfiMdePkgTokenSpaceGuid.PcdDebugPrintErrorLevel|0x800fee0f
 
 [PcdsDynamicDefault.common]
 gEfiMdeModulePkgTokenSpaceGuid.PcdVideoHorizontalResolution|2944
