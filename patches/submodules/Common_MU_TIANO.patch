@@ -1,0 +1,26 @@
+diff --git a/EmbeddedPkg/Library/PrePiLib/PrePiLib.c b/EmbeddedPkg/Library/PrePiLib/PrePiLib.c
+index 0ade95e7fe..ede89b9f84 100644
+--- a/EmbeddedPkg/Library/PrePiLib/PrePiLib.c
++++ b/EmbeddedPkg/Library/PrePiLib/PrePiLib.c
+@@ -7,6 +7,8 @@
+ **/
+ 
+ #include <PrePi.h>
++#include <Library/PrintLib.h>
++#include <Library/SerialPortLib.h>
+ 
+ //
+ // Hack to work in NT32
+@@ -148,6 +150,12 @@ LoadDxeCoreFromFfsFile (
+ 
+   BuildModuleHob (&FvFileInfo.FileName, (EFI_PHYSICAL_ADDRESS)(UINTN)ImageAddress, EFI_SIZE_TO_PAGES ((UINT32)ImageSize) * EFI_PAGE_SIZE, EntryPoint);
+ 
++  {
++    CHAR8 Msg[128];
++    UINTN MsgLen = AsciiSPrint (Msg, sizeof (Msg), "[PrePi] DxeCore Base=0x%016lx Entry=0x%016lx Size=0x%lx\r\n", (UINT64)ImageAddress, (UINT64)EntryPoint, (UINT64)ImageSize);
++    SerialPortWrite ((UINT8 *)Msg, MsgLen);
++  }
++
+   DEBUG ((DEBUG_INFO | DEBUG_LOAD, "Loading DxeCore at 0x%10p EntryPoint=0x%10p\n", (VOID *)(UINTN)ImageAddress, (VOID *)(UINTN)EntryPoint));
+ 
+   Hob = GetHobList ();

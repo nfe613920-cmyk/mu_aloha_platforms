@@ -1,0 +1,46 @@
+diff --git a/BaseTools/Bin/nasm_ext_dep.yaml b/BaseTools/Bin/nasm_ext_dep.yaml
+index ecd3c01337..fa08b0d626 100644
+--- a/BaseTools/Bin/nasm_ext_dep.yaml
++++ b/BaseTools/Bin/nasm_ext_dep.yaml
+@@ -9,7 +9,7 @@
+ ##
+ {
+   "id": "nasm-1",
+-  "scope": "edk2-build",
++  "scope": "windows-only",
+   "type": "nuget",
+   "name": "mu_nasm",
+   "source": "https://pkgs.dev.azure.com/projectmu/mu/_packaging/Basetools-Binary/nuget/v3/index.json",
+diff --git a/MdeModulePkg/Core/Dxe/Mem/Page.c b/MdeModulePkg/Core/Dxe/Mem/Page.c
+index 407daa3776..3dfd4a459e 100644
+--- a/MdeModulePkg/Core/Dxe/Mem/Page.c
++++ b/MdeModulePkg/Core/Dxe/Mem/Page.c
+@@ -473,15 +473,6 @@ AllocateMemoryMapEntry (
+                               DEFAULT_PAGE_ALLOCATION_GRANULARITY,
+                               FALSE
+                               );
+-    // MU_CHANGE START: The above call to CoreAllocatePoolPages() sidesteps the application of the
+-    //                  memory protection policy so apply it here to avoid a potential page fault
+-    ApplyMemoryProtectionPolicy (
+-      EfiConventionalMemory,
+-      EfiBootServicesData,
+-      (EFI_PHYSICAL_ADDRESS)(UINTN)FreeDescriptorEntries,
+-      DEFAULT_PAGE_ALLOCATION_GRANULARITY
+-      );
+-    // MU_CHANGE END
+     if (FreeDescriptorEntries != NULL) {
+       //
+       // Enque the free memmory map entries into the list
+@@ -540,10 +531,10 @@ CoreFreeMemoryMapStack (
+ 
+     // MU_CHANGE Start - CodeQL Change
+     // If entry allocation failed once, it is unlikely to succeed moving forward
+-    // However, we can try since we're in the middle of moving list nodes
++    // Break out so we don't spin forever in early boot
+     if (Entry == NULL) {
+       ASSERT (Entry != NULL);
+-      continue;
++      break;
+     }
+ 
+     // MU_CHANGE End - CodeQL Change

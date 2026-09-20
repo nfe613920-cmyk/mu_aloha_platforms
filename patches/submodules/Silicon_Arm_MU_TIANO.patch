@@ -1,0 +1,33 @@
+diff --git a/ArmPkg/Library/DefaultExceptionHandlerLib/AArch64/DefaultExceptionHandler.c b/ArmPkg/Library/DefaultExceptionHandlerLib/AArch64/DefaultExceptionHandler.c
+index 5f9bcf7966..a0e7d402ba 100644
+--- a/ArmPkg/Library/DefaultExceptionHandlerLib/AArch64/DefaultExceptionHandler.c
++++ b/ArmPkg/Library/DefaultExceptionHandlerLib/AArch64/DefaultExceptionHandler.c
+@@ -203,12 +203,26 @@ DefaultExceptionHandler (
+ 
+   mRecursiveException = TRUE;
+ 
+-  CharCount = AsciiSPrint (Buffer, sizeof (Buffer), "\n\n%a Exception at 0x%016lx\n", gExceptionTypeString[ExceptionType], SystemContext.SystemContextAArch64->ELR);
++  CharCount = AsciiSPrint (
++    Buffer, sizeof (Buffer),
++    "\n\n!!!!!!!!!!!!!!!! [FATAL CPU EXCEPTION OCCURRED] !!!!!!!!!!!!!!!!\n"
++    "Exception Type: %a\n"
++    "PC (ELR):       0x%016lx\n"
++    "Fault Info FAR: 0x%016lx\n"
++    "Syndrome ESR:   0x%08lx\n"
++    "Stack SP:       0x%016lx\n"
++    "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n\n",
++    gExceptionTypeString[ExceptionType],
++    SystemContext.SystemContextAArch64->ELR,
++    SystemContext.SystemContextAArch64->FAR,
++    SystemContext.SystemContextAArch64->ESR,
++    SystemContext.SystemContextAArch64->SP
++  );
+   SerialPortWrite ((UINT8 *)Buffer, CharCount);
+ 
+   // Prepare a unicode buffer for ConOut, if applicable, in case the buffer
+   // gets reused.
+-  UnicodeSPrintAsciiFormat (UnicodeBuffer, MAX_PRINT_CHARS, Buffer);
++  UnicodeSPrintAsciiFormat (UnicodeBuffer, MAX_PRINT_CHARS, "%a Exception at 0x%016lx\n", gExceptionTypeString[ExceptionType], SystemContext.SystemContextAArch64->ELR);
+ 
+   DEBUG_CODE_BEGIN ();
+   CHAR8   *Pdb, *PrevPdb;

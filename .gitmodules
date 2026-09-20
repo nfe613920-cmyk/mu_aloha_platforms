@@ -2,14 +2,17 @@
 	path = MU_BASECORE
 	url = https://github.com/microsoft/mu_basecore.git
 	branch = release/202502
+	ignore = dirty
 [submodule "Common/MU_TIANO"]
 	path = Common/MU_TIANO
 	url = https://github.com/microsoft/mu_tiano_plus.git
 	branch = release/202502
+	ignore = dirty
 [submodule "Common/MU"]
 	path = Common/MU
 	url = https://github.com/microsoft/mu_plus.git
 	branch = release/202502
+	ignore = dirty
 [submodule "Common/MU_OEM_SAMPLE"]
 	path = Common/MU_OEM_SAMPLE
 	url = https://github.com/microsoft/mu_oem_sample.git
@@ -18,12 +21,14 @@
 	path = Silicon/Arm/MU_TIANO
 	url = https://github.com/microsoft/mu_silicon_arm_tiano.git
 	branch = release/202502
+	ignore = dirty
 [submodule "Platforms/SurfaceDuoBinaries"]
 	path = Binaries
 	url = https://github.com/Project-Aloha/SurfaceDuoBinaries-fork
 [submodule "Platforms/SurfaceDuoACPI"]
 	path = Platforms/SurfaceDuoACPI
 	url = https://github.com/Project-Aloha/acpi_oem_third_party_common
+	ignore = dirty
 [submodule "Features/DFCI"]
 	path = Features/DFCI
 	url = https://github.com/microsoft/mu_feature_dfci
@@ -34,6 +39,7 @@
 	path = Platforms/OpensslPkg/Library/OpensslLib/openssl
 	url = https://github.com/openssl/openssl.git
 	branch = 830bf8e1e4749ad65c51b6a1d0d769ae689404ba
+	ignore = dirty
 [submodule "Platforms/CranePkg"]
 	path = Platforms/CranePkg
 	url = https://github.com/Project-Aloha/CrDK
